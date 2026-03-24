@@ -34,7 +34,7 @@ jobs:
         run: cd auth-service && go test ./...
 
       - name: Build binary
-        run: cd auth-service && go build -o app main.go
+        run: cd auth-service && go build -o app .
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4

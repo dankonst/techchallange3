@@ -1,0 +1,17 @@
+# binários
+*.exe
+*.out
+
+# go
+bin/
+vendor/
+
+# docker
+*.log
+
+# env
+.env
+
+# os
+.DS_Store
+Thumbs.db

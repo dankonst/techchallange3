@@ -5,10 +5,6 @@ on:
     paths:
       - "auth-service/**"
       - ".github/workflows/auth-ci.yml"
-  pull_request:
-    paths:
-      - "auth-service/**"
-      - ".github/workflows/auth-ci.yml"
 
 jobs:
   build-test-push:
@@ -23,23 +19,22 @@ jobs:
           pwd
           ls -la
           ls -la auth-service
+          cat auth-service/go.mod
 
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
           go-version: "1.22"
+          cache: false
 
       - name: Download deps
-        working-directory: auth-service
-        run: go mod download
+        run: cd auth-service && go mod download
 
       - name: Test
-        working-directory: auth-service
-        run: go test ./...
+        run: cd auth-service && go test ./...
 
       - name: Build binary
-        working-directory: auth-service
-        run: go build -o app main.go
+        run: cd auth-service && go build -o app main.go
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -53,8 +48,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build image
-        working-directory: auth-service
-        run: docker build -t auth-service:latest .
+        run: cd auth-service && docker build -t auth-service:latest .
 
       - name: Tag image
         run: docker tag auth-service:latest 975050093343.dkr.ecr.us-east-1.amazonaws.com/auth-service:latest

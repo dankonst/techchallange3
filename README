@@ -1,0 +1,134 @@
+Visão geral
+
+Este projeto foi desenvolvido com o objetivo de implementar uma arquitetura moderna baseada em microsserviços, utilizando práticas atuais de engenharia de software, DevOps e infraestrutura em nuvem.
+
+A proposta foi construir uma solução escalável e automatizada para o sistema ToggleMaster, organizando os serviços de forma independente e preparando todo o ambiente para execução em Kubernetes.
+
+Durante o desenvolvimento, buscamos aplicar conceitos de cloud-native architecture, infraestrutura como código e entrega contínua, aproximando o projeto de um cenário real de produção.
+
+Objetivo da solução
+
+O foco principal do projeto foi estruturar um ambiente completo que permitisse:
+
+provisionamento automatizado de infraestrutura em cloud;
+organização de uma arquitetura baseada em microsserviços;
+implementação de pipeline de CI/CD;
+adoção de estratégia GitOps para deploy;
+preparação de um cluster Kubernetes gerenciado;
+separação clara de responsabilidades entre serviços.
+
+Mais do que apenas fazer a aplicação rodar, o objetivo foi construir uma base sólida, sustentável e escalável.
+
+Arquitetura proposta
+
+A arquitetura foi desenhada considerando boas práticas de mercado e a necessidade de evolução contínua do sistema.
+
+O fluxo principal da solução funciona da seguinte forma:
+
+o código é versionado no GitHub;
+pipelines automatizados são executados via GitHub Actions;
+as imagens dos microsserviços são publicadas no Amazon ECR;
+o cluster Kubernetes é gerenciado pelo Amazon EKS;
+o ArgoCD é responsável pela sincronização GitOps;
+a infraestrutura é provisionada com Terraform.
+
+Além disso, a solução contempla serviços complementares importantes para sistemas distribuídos, como banco relacional, cache, armazenamento NoSQL e mensageria.
+
+Microsserviços da aplicação
+
+A aplicação foi estruturada em cinco microsserviços independentes:
+
+auth-service
+flag-service
+targeting-service
+evaluation-service
+analytics-service
+
+Essa divisão permite maior flexibilidade de evolução, facilita manutenção e possibilita escalabilidade horizontal de acordo com a demanda.
+
+Cada serviço foi preparado para ser empacotado em container Docker e posteriormente executado no ambiente Kubernetes.
+
+Infraestrutura em nuvem
+
+A infraestrutura foi criada utilizando Terraform, com o objetivo de garantir rastreabilidade, repetibilidade e padronização do ambiente.
+
+Foram provisionados:
+
+VPC dedicada para isolamento da solução;
+subnets públicas e privadas;
+cluster Kubernetes gerenciado (Amazon EKS);
+repositórios de imagens no Amazon ECR;
+bancos de dados PostgreSQL (Amazon RDS);
+cache Redis (Amazon ElastiCache);
+banco NoSQL (Amazon DynamoDB);
+fila de mensageria (Amazon SQS);
+bucket S3 para armazenamento do estado do Terraform.
+
+Essa configuração reflete um ambiente próximo de produção, com foco em segurança e organização de rede.
+
+Pipeline DevSecOps
+
+Foi estruturada uma esteira de CI/CD utilizando GitHub Actions.
+
+O pipeline automatiza etapas importantes do ciclo de entrega, como:
+
+instalação de dependências;
+execução de testes;
+build da aplicação;
+build da imagem Docker;
+autenticação na AWS;
+envio da imagem para o Amazon ECR.
+
+A proposta é que esse modelo seja replicado para todos os microsserviços, garantindo consistência no processo de entrega.
+
+Estratégia GitOps
+
+A solução também adota o conceito de GitOps, onde os manifestos Kubernetes são versionados em um repositório específico.
+
+O ArgoCD foi configurado no cluster para atuar como ferramenta de sincronização entre o repositório GitOps e o ambiente Kubernetes.
+
+Essa abordagem facilita auditoria, rollback e controle de mudanças no processo de deploy.
+
+Kubernetes e ArgoCD
+
+O cluster EKS foi provisionado com sucesso e os recursos do ArgoCD foram aplicados no namespace dedicado.
+
+Também foi criado um namespace específico para os microsserviços da aplicação.
+
+Durante a criação do node group gerenciado, foram identificadas falhas recorrentes no ambiente do laboratório AWS Academy, impedindo a execução dos pods. Mesmo assim, toda a estrutura necessária para execução da solução foi preparada.
+
+Desafios encontrados
+
+O principal desafio do projeto foi a limitação do ambiente de laboratório na criação dos worker nodes do cluster Kubernetes.
+
+Embora o cluster tenha sido provisionado corretamente, a criação do node group apresentou falhas sucessivas, comportamento comum em ambientes compartilhados ou com restrições de capacidade.
+
+Esse cenário impactou a execução final dos serviços no cluster, mas não comprometeu o desenho arquitetural, a automação da infraestrutura nem a estruturação da pipeline e do GitOps.
+
+Tecnologias utilizadas
+Terraform
+AWS
+Amazon EKS
+Amazon ECR
+Amazon RDS
+Amazon DynamoDB
+Amazon ElastiCache Redis
+Amazon SQS
+Amazon S3
+Kubernetes
+ArgoCD
+GitHub Actions
+Go
+Docker
+Conclusão
+
+O projeto entregou uma base consistente para uma arquitetura moderna de microsserviços em ambiente cloud-native.
+
+Mesmo com limitações do ambiente de laboratório, foi possível estruturar a infraestrutura, organizar os serviços, implementar automação de entrega e preparar a estratégia GitOps.
+
+A solução está pronta para evolução futura, incluindo:
+
+estabilização do node group do cluster;
+deploy completo dos microsserviços;
+implementação de observabilidade;
+expansão da pipeline para todos os serviços.

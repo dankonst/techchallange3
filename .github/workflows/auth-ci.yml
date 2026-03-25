@@ -55,3 +55,4 @@ jobs:
 
       - name: Push image
         run: docker push 975050093343.dkr.ecr.us-east-1.amazonaws.com/auth-service:latest
+        
